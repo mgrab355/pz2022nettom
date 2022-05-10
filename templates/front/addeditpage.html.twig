@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+
+            <div class="row1 justify-content-center align-items-center">
+                <div class="card w-50 h-50 ">
+                    <div class="card-header">Creating new project
+                    </div>
+                    <div class="card-body">
+                        <label for="basic-url">Name of your project</label>
+                        <input type="text" class="form-control">
+                        <label for="basic-url">URL of website to attack</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon3">https://</span>
+                            </div>
+                            <input type="text" class="form-control" id="basic-url">
+                        </div>
+                        <label>Choose user/s with permission</label>
+                        <select class="form-select mb-3" multiple size="5" aria-label=".form-select-lg example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">User 1 </option>
+                            <option value="2">User 2 </option>
+                            <option value="3">User 3</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
