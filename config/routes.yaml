@@ -5,3 +5,9 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+app_main:
+    path: /
+    controller:
+        App\Controller\main:
+            index
