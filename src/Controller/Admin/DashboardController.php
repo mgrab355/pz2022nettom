@@ -22,9 +22,9 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
-
+        return $this->redirect('http://localhost:6969/admin?crudAction=index&crudControllerFqcn=App%5CController%5CAdmin%5CRaportTestCrudController&menuIndex=1&submenuIndex=-1');
     }
+
 
     public function configureDashboard(): Dashboard
     {
@@ -36,7 +36,6 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-            yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
             yield MenuItem::linkToCrud('raport_test', 'fa fa-tags', RaportTest::class);
             yield MenuItem::linkToCrud('user', 'fa fa-tags', User::class);
