@@ -19,7 +19,7 @@ class Projects
     #[ORM\Column(type: 'text')]
     private $url;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'date')]
     private $date;
 
     public function getId(): ?int
