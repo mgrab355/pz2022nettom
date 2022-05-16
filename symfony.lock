@@ -437,5 +437,8 @@
     },
     "willdurand/negotiation": {
         "version": "3.1.0"
+    },
+    "zaproxy/php-owasp-zap-v2": {
+        "version": "2.4.3-beta1"
     }
 }
