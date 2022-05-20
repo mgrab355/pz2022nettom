@@ -167,33 +167,20 @@ class Zapv2 {
 	 * @throws ZapError
 	 */
 	public function request($url, $get=array()) {
-		$response = $this->sendRequest($url . '?' . $this->urlencode($get));
-		if ($response === false) {
-			throw new ZapError("Connection error (proxy: {$this->proxy})");
-		}
-		$response = trim($response, '()');
-		return json_decode($response, true);
-	}
+        // create curl resource
+        $ch = \curl_init();
+        // set url
+//        \curl_setopt($ch, CURLOPT_URL, "http://127.0.0.1:8080/JSON/ascan/action/scan/?apikey=l40ssrb8geospr95ppaps7eb88&url=http%3A%2F%2F127.0.0.1&recurse=&inScopeOnly=&scanPolicyName=&method=&postData=&contextId=");
+        \curl_setopt($ch, CURLOPT_URL, "http://127.0.0.1:8080/JSON/ascan/action/scan/?apikey=l40ssrb8geospr95ppaps7eb88&url=http%3A%2F%2F127.0.0.1&recurse=&inScopeOnly=&scanPolicyName=&method=&postData=&contextId=");
+        //return the transfer as a string
+        \curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // $output contains the output string
+        $output = \curl_exec($ch);
+        $err = \curl_error($ch);
 
-	/**
-	 * Shortcut for an API OTHER GET request.
-	 *
-	 * @param string $url the url to GET at.
-	 * @param array $getParams the disctionary to turn into GET variables.
-	 * @return string
-	 */
-	public function requestOther($url, $getParams=array()) {
-		return $this->sendRequest($url . '?' . $this->urlencode($getParams));
-	}
+        // close curl resource to free up system resources
+        \curl_close($ch);
 
-	private function urlencode($getParams) {
-		$param = "";
-		foreach ($getParams as $key => $value) {
-			if ($param != "") {
-				$param .= "&";
-			}
-			$param .= $key . "=" . urlencode($value);
-		}
-		return $param;
-	}
-}
+        dump($output);
+        dump($err);
+}}
