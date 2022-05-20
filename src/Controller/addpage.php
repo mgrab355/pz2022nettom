@@ -8,7 +8,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Services\ApiKey;
 
 
 
@@ -19,7 +18,7 @@ class addpage extends AbstractController
      *
      * */
 
-        public function index(ManagerRegistry $doctrine, Request $request, ApiKey $apiKey )
+        public function index(ManagerRegistry $doctrine, Request $request )
     {
         $project = new Project();
         $form = $this->createFormBuilder($project)
@@ -38,7 +37,7 @@ class addpage extends AbstractController
             return $this->redirect('/project');
         }
         return $this->render('front/addeditpage.html.twig', array(
-            'form' => $form->createView()),
+            'form' => $form->createView()));
     }
 
 
