@@ -1,0 +1,45 @@
+{
+  "pageAlerts": {
+    "Informational": {},
+    "Low": {
+      "X-Content-Type-Options Header Missing": {
+        "evidence": "",
+        "param": "X-Content-Type-Options",
+        "name": "X-Content-Type-Options Header Missing",
+        "risk": "Low",
+        "id": "2",
+        "uri": "http://127.0.0.1"
+      }
+    },
+    "Medium": {
+      "Missing Anti-clickjacking Header": {
+        "evidence": "",
+        "param": "X-Frame-Options",
+        "name": "Missing Anti-clickjacking Header",
+        "risk": "Medium",
+        "id": "0",
+        "uri": "http://127.0.0.1"
+      },
+      "Content Security Policy (CSP) Header Not Set": {
+        "evidence": "",
+        "param": "",
+        "name": "Content Security Policy (CSP) Header Not Set",
+        "risk": "Medium",
+        "id": "1",
+        "uri": "http://127.0.0.1"
+      }
+    },
+    "High": {}
+  },
+  "siteAlerts": {
+    "Informational": [],
+    "Low": [
+      "X-Content-Type-Options Header Missing"
+    ],
+    "Medium": [
+      "Content Security Policy (CSP) Header Not Set",
+      "Missing Anti-clickjacking Header"
+    ],
+    "High": []
+  }
+}

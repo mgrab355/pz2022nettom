@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Controller;
+
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use \Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Project;
 use Doctrine\Persistence\ManagerRegistry;
 use \Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
-
-
+use App\Services\ApiKey;
+use App\Entity\ScanAlert;
+use App\Services\GetScan;
 class addpage extends AbstractController
 {
     /**
@@ -18,7 +20,7 @@ class addpage extends AbstractController
      *
      * */
 
-        public function index(ManagerRegistry $doctrine, Request $request )
+    public function index(ManagerRegistry $doctrine, Request $request, ApiKey $apikey)
     {
         $project = new Project();
         $form = $this->createFormBuilder($project)
@@ -29,7 +31,7 @@ class addpage extends AbstractController
             ->getForm();
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form -> isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $entityManager = $doctrine->getManager();
             $entityManager->persist($data);
@@ -37,39 +39,48 @@ class addpage extends AbstractController
             return $this->redirect('/project');
         }
         return $this->render('front/addeditpage.html.twig', array(
-            'form' => $form->createView()));
+            'form' => $form->createView(),
+            'apkikey' => $apikey->key()
+        ));
     }
 
 
     /**
-     * @Route("/raport/all")
+     * @Route("/jsonAdd")
      */
-    public function side_bar(ManagerRegistry $doctrine): Response
+    //z lokalnego pliku json pobiera dane i zapisuje je do bazy danych. Dane sa bardzo ogolne, do przerobienia na szczegolowy scan.
+    // plik json uzyty w tej funkcji to dataTest.json jest w tym samym folderze. dump($alerts) wyswietla te alerty
+    public function insertScan(ManagerRegistry $doctrine )
     {
-        $raport = $doctrine->getRepository(Project::class)->findAll();
+//
+        $jsondata = file_get_contents('/home/mateusz/Desktop/php_projects/pz2022nettom/src/Controller/dataTest.json');
+        $data = json_decode($jsondata, true); // biorac dane z pliku (i pewnie z api tez) trzeba uzyc decode
 
-        if (!$raport) {
-            throw $this->createNotFoundException(
-                'no raports was found '
-            );
+        $alerts = $data['pageAlerts'];
+        $entityManager = $doctrine->getManager();
+        foreach ($alerts as $key => $values) { //dane w pliku sa oznaczone jako low medium high petla przechodzi przechodzi po kazdym z nich
+            foreach ($values as $item => $value) { // przechodzi po kazdych danych z low/medium/high i wyciaga dane od razu zapisujac do bazy
+                $scan = new ScanAlert();
+                $scan->setEvidence($value['evidence']);
+                $scan->setName($value['name']);
+                $scan->setParam($value['param']);
+                $scan->setRisk($value['risk']);
+                $scan->setUri($value['uri']);
+                $entityManager->persist($scan);
+                $entityManager->flush();
+            }
         }
-        return $this->Render('main/show.html.twig', array('raports' => $raport));
+        return dump($alerts);
+    }
 
+    /**
+     * @Route ("/jsonScan")
+     */
+    public function showScans(GetScan $getScan){
+        // wczesniejszy import z services/getscan oraz wywowalnie funkcji.
+        //23.05  wyswietlenie szczegolowego scanu
+        $scans = $getScan->getScans('http://localhost:6969/');
+        $scan = json_decode($scans);
+        return dump($scan);
     }
 }
-
-//        // create curl resource
-//        $ch = curl_init();
-//        // set url
-//        curl_setopt($ch, CURLOPT_URL, "http://127.0.0.1:8080/JSON/ascan/action/scan/?apikey=mrfr81krgb3arenv01gi4k9uk9&url=https://localhost:6969/login_front&recurse=&inScopeOnly=&scanPolicyName=&method=&postData=&contextId=");
-//        //return the transfer as a string
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-//        // $output contains the output string
-//        $output = curl_exec($ch);
-//        $err = curl_error($ch);
-//
-//        // close curl resource to free up system resources
-//        curl_close($ch);
-//
-//        dump($output);
-//        dump($err);
