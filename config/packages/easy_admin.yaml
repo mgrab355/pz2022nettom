@@ -1,0 +1,9 @@
+easy_admin:
+  entities:
+    User:
+      class: App\Entity\User
+      form:  # <-- 'form' is applied to both 'new' and 'edit' views
+        fields:
+          - 'id'
+          - { property: 'email', type: 'email', label: 'email' }
+          - { property: 'role', type: 'js', label: 'email' }
