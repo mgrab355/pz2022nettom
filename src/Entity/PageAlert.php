@@ -107,4 +107,5 @@ class PageAlert
 
         return $this;
     }
+
 }

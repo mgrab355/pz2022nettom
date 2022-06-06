@@ -22,6 +22,9 @@ class Project
     #[ORM\Column(type: 'string', length: 255)]
     private $users;
 
+    #[ORM\Column(type: 'text')]
+    private $url_image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Project
     public function setUsers(string $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getUrlImage(): ?string
+    {
+        return $this->url_image;
+    }
+
+    public function setUrlImage(string $url_image): self
+    {
+        $this->url_image = $url_image;
 
         return $this;
     }

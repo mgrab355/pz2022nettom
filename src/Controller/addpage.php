@@ -30,7 +30,7 @@ class addpage extends AbstractController
             ->add('Name', TextType::class)
             ->add('url', TextType::class)
             ->add('users', TextType::class)
-//            ->add('icon', TextType::class)
+            ->add('icon', TextType::class)
             ->getForm();
 //        $run = $runScan ->runScan()
 
