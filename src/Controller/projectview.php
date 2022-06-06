@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
-use App\Services\runScan;
 use phpDocumentor\Reflection\Types\AbstractList;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +29,7 @@ class projectview extends AbstractController
     public function index(Request $request, $id)
     {
 
-        dump([$id]);
+//        dump([$id]);
 //        $question_id = $request->query->get('$id');
         var_dump($request->query->all());
         $scan = new Project();
