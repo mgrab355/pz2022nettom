@@ -2,9 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Project;
 use App\Entity\RaportTest;
 use App\Entity\User;
-use App\Entity\Projects;
 use App\Entity\ProjectRaports;
 use App\Entity\UsersProject;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -18,7 +18,7 @@ class DashboardController extends AbstractDashboardController
 {
 //#[IsGranted('ROLE_ADMIN')]
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/admin",)
      */
     public function index(): Response
     {
@@ -39,7 +39,7 @@ class DashboardController extends AbstractDashboardController
 
             yield MenuItem::linkToCrud('raport_test', 'fa fa-tags', RaportTest::class);
             yield MenuItem::linkToCrud('user', 'fa fa-tags', User::class);
-            yield MenuItem::linkToCrud('projects', 'fa fa-tags', Projects::class);
+            yield MenuItem::linkToCrud('projects', 'fa fa-tags', Project::class);
             yield MenuItem::linkToCrud('Users Projects', 'fa fa-tags', UsersProject::class);
             yield MenuItem::linkToCrud('Projects Raports', 'fa fa-tags', ProjectRaports::class);
 

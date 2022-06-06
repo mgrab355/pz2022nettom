@@ -6,6 +6,7 @@
     "require": {
         "php": ">=8.0.2",
         "ext-ctype": "*",
+        "ext-curl": "*",
         "ext-iconv": "*",
         "api-platform/core": "^2.6",
         "doctrine/annotations": "^1.0",
@@ -34,8 +35,7 @@
         "symfony/validator": "6.0.*",
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "6.0.*",
-        "zaproxy/php-owasp-zap-v2": "2.4.*@beta",
-        "ext-curl": "*"
+        "zaproxy/php-owasp-zap-v2": "2.4.*@beta"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.40"

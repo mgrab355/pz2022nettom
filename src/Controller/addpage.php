@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use ApiPlatform\Core\Bridge\Doctrine\MongoDbOdm\PropertyInfo\DoctrineExtractor;
 use ApiPlatform\Core\OpenApi\Model\Response;
+use App\Services\insertScan;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use \Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Project;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,14 +16,14 @@ use App\Services\runScan;
 use App\Entity\ScanAlert;
 use App\Services\AdvancedScan;
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class addpage extends AbstractController
 {
     /**
-     * @Route ("/addpage" name='add_page')
+     * @Route ("/addpage" )
      *
      * */
-
     public function index(ManagerRegistry $doctrine, Request $request, runScan $runScan)
     {
         $project = new Project();
@@ -30,7 +31,7 @@ class addpage extends AbstractController
             ->add('Name', TextType::class)
             ->add('url', TextType::class)
             ->add('users', TextType::class)
-            ->add('icon', TextType::class)
+            ->add('url_image', TextType::class)
             ->getForm();
 //        $run = $runScan ->runScan()
 
@@ -41,14 +42,14 @@ class addpage extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($data);
             $entityManager->flush();
-//            $scan = $getScan ->getScans($data['url']);
-//            $updateScan = $insertScan ->insertScan($scan);
+            $id = $doctrine->getRepository(Project::class)->findOneby(array(),array('id'=>'DESC'),1,0);
+            return $this->redirectToRoute('project', ['id' => $id->getId()]);
         }
-        return $this->render('front/addeditpage.html.twig', array(
+
+        return $this->render('/front/addeditpage.html.twig', array(
             'form' => $form->createView()
         ));
     }
-
 
     /**
      * @Route ("/jsonScan")

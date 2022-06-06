@@ -1,141 +1,40 @@
 {% extends 'base.html.twig' %}
-
-{% block body %}
-
-<div class="row1 justify-content-center align-items-center">
-    <div class="card w-75 h-75 ">
-        <div class="card-header">https://www.test.pl
-        </div>
-        <div class="card-body ">
-            <h5 class="card-title">Name of project</h5>
-            <div class="btn-group-lg align-content-around">
-{#                <button class="btn btn-primary btn-lg">Do Test</button>#}
-                {{ form_widget(form.doTest,{'attr': {'class': 'btn btn-primary btn-lg'}}) }}
-                <button class="btn btn-success">Edit Project</button>
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block body%}
+    {{ form_start(form) }}
+    <div class="row1 justify-content-center align-items-center">
+        <div class="card w-50 h-50 ">
+            <div class="card-header">Creating new project
             </div>
+            <div class="card-body">
+                <label for="basic-url">Name of your project</label>
 
-            <div class="row justify-content-md-center pt-3 ">
-                <div class="col-md-6">
-                    <h3 class="">Found Bugs <i
-                                class="bi bi-bug-fill"></i>
-                        <div class="btn border btn-danger rounded-pill ">1</div>
-                    </h3>
-                    <div class="list-group p-1 border border-danger" style="max-height: 60vh ">
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border-0 list-group-item-danger">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
+                {{ form_widget(form.Name,{'attr': {'class': 'task_field'}}) }}
 
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget
-                                risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
+                <label for="basic-url">URL of website to attack</label>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">https://</span>
+
                     </div>
+                    {#                        <input type="text" class="form-control" id="basic-url">#}
+                    {{ form_widget(form.url,{'attr': {'class': 'form-control'}}) }}
                 </div>
-                <div class="col-md-6">
-                    <h3 class="">Repaired Bugs<i class="bi bi-bug"></i>
-                        <div class="btn border btn-success rounded-pill ">9</div>
-                    </h3>
-                    <div class="list-group table-bordered p-1 border border-success"
-                         style="max-height: 60vh ">
+                <label>Choose user/s with permission</label>
+                {#                        <select class="form-select mb-3" multiple size="5" aria-label=".form-select-lg example">#}
+                {#                            <option selected>Open this select menu</option>#}
+                {#                            <option value="1">User 1 </option>#}
+                {#                            <option value="2">User 2 </option>#}
+                {#                            <option value="3">User 3</option>#}
+                {#                        </select>#}
+                {{ form_widget(form.users,{'attr': {'class': 'form'}}) }}
+                <label>Add url image of Project</label>
 
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                        <a href="#"
-                           class="list-group-item list-group-item-action flex-column align-items-start border border-0 list-group-item-success">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                                diam
-                                eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                    </div>
-                </div>
+                {{ form_widget(form.url_image,{'attr': {'class': 'form'}}) }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
