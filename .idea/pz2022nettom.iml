@@ -98,6 +98,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/link" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/zaproxy/php-owasp-zap-v2" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/creof/doctrine2-spatial" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/creof/geo-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/creof/wkb-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/creof/wkt-parser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
-use App\Services\lastRow;
 use App\Services\runScan;
 use phpDocumentor\Reflection\Types\AbstractList;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -18,14 +17,22 @@ use App\Services\insertScan;
 
 
 
+
 class projectview extends AbstractController
 {
     /**
-     * @Route ("/project/{id}" name="project")
+     * @Route ("/project/id/{id}",name="project" )
      *
-     * */
-    public function index(insertScan $insertScan, ManagerRegistry $doctrine, runScan $runScan, Project $project, lastRow $lastRow)
+     *
+     *
+     */
+
+    public function index(Request $request, $id)
     {
+
+        dump([$id]);
+//        $question_id = $request->query->get('$id');
+        var_dump($request->query->all());
         $scan = new Project();
         $form = $this->createFormBuilder($scan)
             ->add('doTest', SubmitType::class)

@@ -16,12 +16,13 @@ use App\Services\runScan;
 use App\Entity\ScanAlert;
 use App\Services\AdvancedScan;
 use App\Entity\User;
+
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class addpage extends AbstractController
 {
     /**
-     * @Route ("/addpage" )
+     * @Route ("/addpage",name="addpage")
      *
      * */
     public function index(ManagerRegistry $doctrine, Request $request, runScan $runScan)
@@ -43,7 +44,8 @@ class addpage extends AbstractController
             $entityManager->persist($data);
             $entityManager->flush();
             $id = $doctrine->getRepository(Project::class)->findOneby(array(),array('id'=>'DESC'),1,0);
-            return $this->redirectToRoute('project', ['id' => $id->getId()]);
+//            return $this->redirectToRoute('project', ['id' => $id->getId()]);
+            return $this->redirect($this->generateUrl('project', array('id' => $id->getId(),)));
         }
 
         return $this->render('/front/addeditpage.html.twig', array(
@@ -58,7 +60,7 @@ class addpage extends AbstractController
     {
         // wczesniejszy import z services/getscan oraz wywowalnie funkcji.
         //23.05  wyswietlenie szczegolowego scanu
-        $scans = $getAdvancedScan->getAdvScans('http://localhost:6969/');
+        $scans = $getAdvancedScan->getAdvScans('http://localhost:7000/');
         $scan = json_decode($scans, true);
         $entityManager = $doctrine->getManager();
         dump($scan);
