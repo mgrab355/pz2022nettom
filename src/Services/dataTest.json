@@ -2,13 +2,21 @@
   "pageAlerts": {
     "Informational": {},
     "Low": {
+      "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)": {
+        "evidence": "X-Powered-By: PHP/8.1.6",
+        "param": "",
+        "name": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+        "risk": "Low",
+        "id": "14",
+        "uri": "http://localhost:6969/"
+      },
       "X-Content-Type-Options Header Missing": {
         "evidence": "",
         "param": "X-Content-Type-Options",
         "name": "X-Content-Type-Options Header Missing",
         "risk": "Low",
-        "id": "2",
-        "uri": "http://127.0.0.1"
+        "id": "13",
+        "uri": "http://localhost:6969/"
       }
     },
     "Medium": {
@@ -17,28 +25,33 @@
         "param": "X-Frame-Options",
         "name": "Missing Anti-clickjacking Header",
         "risk": "Medium",
-        "id": "0",
-        "uri": "http://127.0.0.1"
+        "id": "11",
+        "uri": "http://localhost:6969/"
       },
       "Content Security Policy (CSP) Header Not Set": {
         "evidence": "",
         "param": "",
         "name": "Content Security Policy (CSP) Header Not Set",
         "risk": "Medium",
-        "id": "1",
-        "uri": "http://127.0.0.1"
+        "id": "12",
+        "uri": "http://localhost:6969/"
       }
     },
     "High": {}
   },
   "siteAlerts": {
-    "Informational": [],
+    "Informational": [
+      "Information Disclosure - Suspicious Comments"
+    ],
     "Low": [
+      "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+      "Timestamp Disclosure - Unix",
       "X-Content-Type-Options Header Missing"
     ],
     "Medium": [
       "Content Security Policy (CSP) Header Not Set",
-      "Missing Anti-clickjacking Header"
+      "Missing Anti-clickjacking Header",
+      "Vulnerable JS Library"
     ],
     "High": []
   }

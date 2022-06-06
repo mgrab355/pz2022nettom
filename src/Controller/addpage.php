@@ -2,17 +2,20 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use ApiPlatform\Core\Bridge\Doctrine\MongoDbOdm\PropertyInfo\DoctrineExtractor;
+use ApiPlatform\Core\OpenApi\Model\Response;
 use \Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Project;
 use Doctrine\Persistence\ManagerRegistry;
 use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Services\ApiKey;
-use App\Entity\ScanAlert;
 use App\Services\GetScan;
+use App\Services\runScan;
+use App\Entity\ScanAlert;
+use App\Services\AdvancedScan;
+use App\Entity\User;
+
 class addpage extends AbstractController
 {
     /**
@@ -20,7 +23,7 @@ class addpage extends AbstractController
      *
      * */
 
-    public function index(ManagerRegistry $doctrine, Request $request, ApiKey $apikey)
+    public function index(ManagerRegistry $doctrine, Request $request, runScan $runScan)
     {
         $project = new Project();
         $form = $this->createFormBuilder($project)
@@ -29,6 +32,8 @@ class addpage extends AbstractController
             ->add('users', TextType::class)
 //            ->add('icon', TextType::class)
             ->getForm();
+//        $run = $runScan ->runScan()
+
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -36,51 +41,69 @@ class addpage extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($data);
             $entityManager->flush();
-            return $this->redirect('/project');
+//            $scan = $getScan ->getScans($data['url']);
+//            $updateScan = $insertScan ->insertScan($scan);
         }
         return $this->render('front/addeditpage.html.twig', array(
-            'form' => $form->createView(),
-            'apkikey' => $apikey->key()
+            'form' => $form->createView()
         ));
     }
 
 
     /**
-     * @Route("/jsonAdd")
+     * @Route ("/jsonScan")
      */
-    //z lokalnego pliku json pobiera dane i zapisuje je do bazy danych. Dane sa bardzo ogolne, do przerobienia na szczegolowy scan.
-    // plik json uzyty w tej funkcji to dataTest.json jest w tym samym folderze. dump($alerts) wyswietla te alerty
-    public function insertScan(ManagerRegistry $doctrine )
+    public function showScans(ManagerRegistry $doctrine, AdvancedScan $getAdvancedScan)
     {
-//
-        $jsondata = file_get_contents('/home/mateusz/Desktop/php_projects/pz2022nettom/src/Controller/dataTest.json');
-        $data = json_decode($jsondata, true); // biorac dane z pliku (i pewnie z api tez) trzeba uzyc decode
-
-        $alerts = $data['pageAlerts'];
+        // wczesniejszy import z services/getscan oraz wywowalnie funkcji.
+        //23.05  wyswietlenie szczegolowego scanu
+        $scans = $getAdvancedScan->getAdvScans('http://localhost:6969/');
+        $scan = json_decode($scans, true);
         $entityManager = $doctrine->getManager();
-        foreach ($alerts as $key => $values) { //dane w pliku sa oznaczone jako low medium high petla przechodzi przechodzi po kazdym z nich
+        dump($scan);
+        foreach ($scan as $key => $values) { //dane w pliku sa oznaczone jako low medium high petla przechodzi przechodzi po kazdym z nich
             foreach ($values as $item => $value) { // przechodzi po kazdych danych z low/medium/high i wyciaga dane od razu zapisujac do bazy
-                $scan = new ScanAlert();
-                $scan->setEvidence($value['evidence']);
-                $scan->setName($value['name']);
-                $scan->setParam($value['param']);
-                $scan->setRisk($value['risk']);
-                $scan->setUri($value['uri']);
-                $entityManager->persist($scan);
+                $alert = new ScanAlert();
+                $alert->setEvidence($value['evidence']);
+                $alert->setName($value['name']);
+                $alert->setParam($value['param']);
+                $alert->setRisk($value['risk']);
+                $alert->setDescription($value['description']);
+                $alert->setConfidence($value['confidence']);
+                $alert->setSolution($value['solution']);
+                $alert->setMethod($value['method']);
+                $alert->setSourceid($value['sourceid']);
+                $alert->setPluginID($value['pluginId']);
+                $alert->setCweid($value['cweid']);
+                $alert->setWascid($value['wascid']);
+                $alert->setMessegeId($value['messageId']);
+                $alert->setUrl($value['url']);
+                $alert->setAlertRef($value['alertRef']);
+                $alert->setReference($value['reference']);
+                $entityManager->persist($alert);
                 $entityManager->flush();
             }
         }
-        return dump($alerts);
+        return true; //  nic sie nie dzieje, jest wyswietlana tylko jeden raport niezaleznie od tego co zostanie podane, nie dodaje do bazy
+
+
     }
 
     /**
-     * @Route ("/jsonScan")
+     * @Route("/users")
      */
-    public function showScans(GetScan $getScan){
-        // wczesniejszy import z services/getscan oraz wywowalnie funkcji.
-        //23.05  wyswietlenie szczegolowego scanu
-        $scans = $getScan->getScans('http://localhost:6969/');
-        $scan = json_decode($scans);
-        return dump($scan);
+    public function showUsers(ManagerRegistry $doctrine, int $id = 1): Response
+
+    {
+        $data = $doctrine->getRepository(User::class)->find($id);
+
+        if (!$data) {
+            throw $this->createNotFoundException(
+                'No product found for id '
+            );
+        }
+        return dump($data->getEmail());
+
     }
 }
+

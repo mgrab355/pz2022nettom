@@ -9,7 +9,8 @@
         <div class="card-body ">
             <h5 class="card-title">Name of project</h5>
             <div class="btn-group-lg align-content-around">
-                <button class="btn btn-primary btn-lg">Do Test</button>
+{#                <button class="btn btn-primary btn-lg">Do Test</button>#}
+                {{ form_widget(form.doTest,{'attr': {'class': 'btn btn-primary btn-lg'}}) }}
                 <button class="btn btn-success">Edit Project</button>
             </div>
 

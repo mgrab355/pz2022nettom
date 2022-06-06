@@ -14,9 +14,6 @@ class ScanAlert
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 400)]
-    private $uri;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
@@ -59,31 +56,16 @@ class ScanAlert
     #[ORM\Column(type: 'string', length: 255)]
     private $url;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'string', length: 100000)]
     private $alertRef;
 
-    #[ORM\Column(type: 'integer')]
-    private $scanID;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 1000, nullable: true)]
     private $reference;
 
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUri(): ?string
-    {
-        return $this->uri;
-    }
-
-    public function setUri(string $uri): self
-    {
-        $this->uri = $uri;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -254,26 +236,14 @@ class ScanAlert
         return $this;
     }
 
-    public function getAlertRef(): ?int
+    public function getAlertRef(): ?string
     {
         return $this->alertRef;
     }
 
-    public function setAlertRef(int $alertRef): self
+    public function setAlertRef(?string $alertRef): self
     {
         $this->alertRef = $alertRef;
-
-        return $this;
-    }
-
-    public function getScanID(): ?int
-    {
-        return $this->scanID;
-    }
-
-    public function setScanID(int $scanID): self
-    {
-        $this->scanID = $scanID;
 
         return $this;
     }
