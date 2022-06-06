@@ -29,6 +29,9 @@
                 {#                            <option value="3">User 3</option>#}
                 {#                        </select>#}
                 {{ form_widget(form.users,{'attr': {'class': 'form'}}) }}
+                <label>Add url image of Project</label>
+
+                {{ form_widget(form.url_image,{'attr': {'class': 'form'}}) }}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 {{ form_end(form) }}
             </div>
