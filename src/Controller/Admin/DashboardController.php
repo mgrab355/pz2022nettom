@@ -22,7 +22,7 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return $this->redirect('http://localhost:6969/admin?crudAction=index&crudControllerFqcn=App%5CController%5CAdmin%5CRaportTestCrudController&menuIndex=1&submenuIndex=-1');
+        return $this->redirect('http://localhost:7000/admin?crudAction=index&crudControllerFqcn=App%5CController%5CAdmin%5CRaportTestCrudController&menuIndex=1&submenuIndex=-1');
     }
 
 
