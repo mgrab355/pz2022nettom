@@ -10,6 +10,7 @@ class PageAlert
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: 'id')]
     #[ORM\Column(type: 'integer')]
     private $id;
 

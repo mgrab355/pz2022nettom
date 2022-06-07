@@ -10,6 +10,7 @@ class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[ORM\OneToMany(mappedBy:'id', targetEntity: PageAlert::class)]
     #[ORM\Column(type: 'integer')]
     private $id;
 
