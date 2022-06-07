@@ -25,7 +25,7 @@ class addpage extends AbstractController
      * @Route ("/addpage",name="addpage")
      *
      * */
-    public function index(ManagerRegistry $doctrine, Request $request, runScan $runScan)
+    public function index(ManagerRegistry $doctrine, Request $request)
     {
         $project = new Project();
         $form = $this->createFormBuilder($project)

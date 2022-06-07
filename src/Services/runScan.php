@@ -2,11 +2,18 @@
 
 namespace App\Services;
 
+use App\Entity\Project;
+use Doctrine\Persistence\ManagerRegistry;
+
 class runScan
 {
-    public function runScan($baseUrl)
+    public function runScan($id,ManagerRegistry $doctrine)
     {
-        $key = 'mrfr81krgb3arenv01gi4k9uk9';
+        $api_id='1';
+        $product = $doctrine->getRepository(Project::class)->find($id);
+        $api = $doctrine->getRepository(\App\Entity\ApiKey::class)->find($api_id);
+        $baseUrl=$product->getUrl();
+        $key = $api->getApiKey();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://127.0.0.1:8080/JSON/ascan/action/scan/?apikey={$key}&url={$baseUrl}&recurse=&inScopeOnly=&scanPolicyName=&method=&postData=&contextId=");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
