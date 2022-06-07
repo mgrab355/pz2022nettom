@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\Entity\Project;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class runScan
 {
     public function runScan($id,ManagerRegistry $doctrine)
     {
+
         $api_id='1';
         $product = $doctrine->getRepository(Project::class)->find($id);
         $api = $doctrine->getRepository(\App\Entity\ApiKey::class)->find($api_id);
@@ -20,7 +22,9 @@ class runScan
         $output = curl_exec($ch);
         $err = curl_error($ch);
         curl_close($ch);
-        dump($output);
-        dump($err);
+//        dump($baseUrl);
+//        dump($output);
+//        dump($err);
+
     }
 }

@@ -34,7 +34,7 @@ class addpage extends AbstractController
             ->add('users', TextType::class)
             ->add('url_image', TextType::class)
             ->getForm();
-//        $run = $runScan ->runScan()
+
 
 
         $form->handleRequest($request);

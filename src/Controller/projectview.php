@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Project;
-use App\Repository\ProjectRepository;
+
 use phpDocumentor\Reflection\Types\AbstractList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,28 +26,34 @@ class projectview extends AbstractController
      *
      *
      */
-    public function index(Request $request,runScan $runScan,ManagerRegistry $doctrine,$id)
+
+    public function index(Request $request,runScan $runScan,ManagerRegistry $doctrine,$id): Response
     {
 
 //     dump($question_id = $request->query->get('$id'));
         $entityManager = $doctrine->getManager();
 //        $id=$this->getRequest()->getUriForPath('project');
-
+//        dump($runScan->runScan($id,$doctrine));
         $scan = new Project();
         $form = $this->createFormBuilder($scan)
             ->add('doTest', SubmitType::class)
             ->getForm();
+
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // perform some action...
+        if ($form->isSubmitted() && $form->isValid())  {
 
             $runScan->runScan($id,$doctrine);
+
+
         }
 
+//        scan($request,$runScan,$doctrine,$id);
+//        $runScan->runScan($id,$doctrine);
 
         return $this->render('front/project.html.twig', array(
             'form' => $form->createView()));
 
     }
+
 }
