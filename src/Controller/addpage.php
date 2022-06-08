@@ -60,7 +60,8 @@ class addpage extends AbstractController
     {
         // wczesniejszy import z services/getscan oraz wywowalnie funkcji.
         //23.05  wyswietlenie szczegolowego scanu
-        $scans = $getAdvancedScan->getAdvScans('http://localhost:7000/');
+
+        $scans = $getAdvancedScan->getAdvScans('http://localhost:7000/',$doctrine);
         $scan = json_decode($scans, true);
         $entityManager = $doctrine->getManager();
         dump($scan);

@@ -2,23 +2,37 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\RaportTestRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ApiResource]
-#[ORM\Entity(repositoryClass: RaportTestRepository::class)]
+/**
+ * RaportTest
+ *
+ * @ORM\Table(name="raport_test")
+ * @ORM\Entity
+ */
 class RaportTest
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'text')]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nazwa", type="text", length=0, nullable=false)
+     */
     private $nazwa;
 
-    #[ORM\Column(type: 'text')]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="opis", type="text", length=0, nullable=false)
+     */
     private $opis;
 
     public function getId(): ?int
@@ -49,4 +63,6 @@ class RaportTest
 
         return $this;
     }
+
+
 }

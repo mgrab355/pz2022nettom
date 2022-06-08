@@ -14,7 +14,7 @@ class insertScan
         //z lokalnego pliku json pobiera dane i zapisuje je do bazy danych. Dane sa bardzo ogolne, do przerobienia na szczegolowy scan.
         // plik json uzyty w tej funkcji to dataTest.json jest w tym samym folderze. dump($alerts) wyswietla te alerty
         {
-            $jsondata = $getScan->getScans('http://localhost:6969/');
+            $jsondata = $getScan->get;
             $data = json_decode($jsondata, true);
             $alerts = $data["pageAlerts"];
             $entityManager = $doctrine->getManager();

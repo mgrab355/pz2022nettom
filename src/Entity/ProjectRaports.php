@@ -2,22 +2,38 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectRaportsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProjectRaportsRepository::class)]
+/**
+ * ProjectRaports
+ *
+ * @ORM\Table(name="project_raports")
+ * @ORM\Entity
+ */
 class ProjectRaports
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'integer')]
-    private $projects_id;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="projects_id", type="integer", nullable=false)
+     */
+    private $projectsId;
 
-    #[ORM\Column(type: 'integer')]
-    private $raport_id;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="raport_id", type="integer", nullable=false)
+     */
+    private $raportId;
 
     public function getId(): ?int
     {
@@ -26,25 +42,27 @@ class ProjectRaports
 
     public function getProjectsId(): ?int
     {
-        return $this->projects_id;
+        return $this->projectsId;
     }
 
-    public function setProjectsId(int $projects_id): self
+    public function setProjectsId(int $projectsId): self
     {
-        $this->projects_id = $projects_id;
+        $this->projectsId = $projectsId;
 
         return $this;
     }
 
     public function getRaportId(): ?int
     {
-        return $this->raport_id;
+        return $this->raportId;
     }
 
-    public function setRaportId(int $raport_id): self
+    public function setRaportId(int $raportId): self
     {
-        $this->raport_id = $raport_id;
+        $this->raportId = $raportId;
 
         return $this;
     }
+
+
 }

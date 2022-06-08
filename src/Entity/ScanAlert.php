@@ -2,66 +2,156 @@
 
 namespace App\Entity;
 
-use App\Repository\ScanAlertRepository;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\String_;
 
-#[ORM\Entity(repositoryClass: ScanAlertRepository::class)]
+/**
+ * ScanAlert
+ *
+ * @ORM\Table(name="scan_alert", indexes={@ORM\Index(name="scan_alert_project__fk", columns={"project_id"}), @ORM\Index(name="scan_alert_scans_id__fk", columns={"scans_id"})})
+ * @ORM\Entity
+ */
 class ScanAlert
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="risk", type="string", length=255, nullable=false)
+     */
     private $risk;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="param", type="string", length=255, nullable=false)
+     */
     private $param;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="evidence", type="string", length=255, nullable=false)
+     */
     private $evidence;
 
-    #[ORM\Column(type: 'string', length: 1000)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=1000, nullable=false)
+     */
     private $description;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="confidence", type="string", length=255, nullable=false)
+     */
     private $confidence;
 
-    #[ORM\Column(type: 'string', length: 1000)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="solution", type="string", length=1000, nullable=false)
+     */
     private $solution;
 
-    #[ORM\Column(type: 'string', length: 10)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="method", type="string", length=10, nullable=false)
+     */
     private $method;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sourceid", type="string", length=255, nullable=false)
+     */
     private $sourceid;
 
-    #[ORM\Column(type: 'integer')]
-    private $pluginID;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="plugin_id", type="integer", nullable=false)
+     */
+    private $pluginId;
 
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cweid", type="integer", nullable=false)
+     */
     private $cweid;
 
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="wascid", type="integer", nullable=false)
+     */
     private $wascid;
 
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="messege_id", type="integer", nullable=false)
+     */
     private $messegeId;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     */
     private $url;
 
-    #[ORM\Column(type: 'string', length: 100000)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alert_ref", type="text", length=16777215, nullable=false)
+     */
     private $alertRef;
 
-    #[ORM\Column(type: 'string', length: 1000, nullable: true)]
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="reference", type="string", length=1000, nullable=true)
+     */
     private $reference;
 
+    /**
+     * @var \Project
+     *
+     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="project_id", referencedColumnName="id")
+     * })
+     */
+    private $project;
+
+    /**
+     * @var \ScansId
+     *
+     * @ORM\ManyToOne(targetEntity="ScansId")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="scans_id", referencedColumnName="id")
+     * })
+     */
+    private $scans;
 
     public function getId(): ?int
     {
@@ -176,14 +266,14 @@ class ScanAlert
         return $this;
     }
 
-    public function getPluginID(): ?int
+    public function getPluginId(): ?int
     {
-        return $this->pluginID;
+        return $this->pluginId;
     }
 
-    public function setPluginID(int $pluginID): self
+    public function setPluginId(int $pluginId): self
     {
-        $this->pluginID = $pluginID;
+        $this->pluginId = $pluginId;
 
         return $this;
     }
@@ -241,7 +331,7 @@ class ScanAlert
         return $this->alertRef;
     }
 
-    public function setAlertRef(?string $alertRef): self
+    public function setAlertRef(string $alertRef): self
     {
         $this->alertRef = $alertRef;
 
@@ -259,4 +349,30 @@ class ScanAlert
 
         return $this;
     }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): self
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    public function getScans(): ?ScansId
+    {
+        return $this->scans;
+    }
+
+    public function setScans(?ScansId $scans): self
+    {
+        $this->scans = $scans;
+
+        return $this;
+    }
+
+
 }

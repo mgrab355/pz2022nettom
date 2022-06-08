@@ -2,19 +2,31 @@
 
 namespace App\Entity;
 
-use App\Repository\ApiKeyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ApiKeyRepository::class)]
+/**
+ * ApiKey
+ *
+ * @ORM\Table(name="api_key")
+ * @ORM\Entity
+ */
 class ApiKey
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $Api_key;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="api_key", type="string", length=255, nullable=false)
+     */
+    private $apiKey;
 
     public function getId(): ?int
     {
@@ -23,13 +35,15 @@ class ApiKey
 
     public function getApiKey(): ?string
     {
-        return $this->Api_key;
+        return $this->apiKey;
     }
 
-    public function setApiKey(string $Api_key): self
+    public function setApiKey(string $apiKey): self
     {
-        $this->Api_key = $Api_key;
+        $this->apiKey = $apiKey;
 
         return $this;
     }
+
+
 }

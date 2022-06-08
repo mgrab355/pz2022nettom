@@ -2,28 +2,52 @@
 
 namespace App\Entity;
 
-use App\Repository\SiteAletrsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SiteAletrsRepository::class)]
+/**
+ * SiteAletrs
+ *
+ * @ORM\Table(name="site_aletrs")
+ * @ORM\Entity
+ */
 class SiteAletrs
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $Informational;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="informational", type="string", length=255, nullable=false)
+     */
+    private $informational;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $Low;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="low", type="string", length=255, nullable=false)
+     */
+    private $low;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $Medium;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="medium", type="string", length=255, nullable=false)
+     */
+    private $medium;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $High;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="high", type="string", length=255, nullable=false)
+     */
+    private $high;
 
     public function getId(): ?int
     {
@@ -32,49 +56,51 @@ class SiteAletrs
 
     public function getInformational(): ?string
     {
-        return $this->Informational;
+        return $this->informational;
     }
 
-    public function setInformational(string $Informational): self
+    public function setInformational(string $informational): self
     {
-        $this->Informational = $Informational;
+        $this->informational = $informational;
 
         return $this;
     }
 
     public function getLow(): ?string
     {
-        return $this->Low;
+        return $this->low;
     }
 
-    public function setLow(string $Low): self
+    public function setLow(string $low): self
     {
-        $this->Low = $Low;
+        $this->low = $low;
 
         return $this;
     }
 
     public function getMedium(): ?string
     {
-        return $this->Medium;
+        return $this->medium;
     }
 
-    public function setMedium(string $Medium): self
+    public function setMedium(string $medium): self
     {
-        $this->Medium = $Medium;
+        $this->medium = $medium;
 
         return $this;
     }
 
     public function getHigh(): ?string
     {
-        return $this->High;
+        return $this->high;
     }
 
-    public function setHigh(string $High): self
+    public function setHigh(string $high): self
     {
-        $this->High = $High;
+        $this->high = $high;
 
         return $this;
     }
+
+
 }

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\PageAlert;
 use App\Entity\Project;
 
+use App\Entity\ScanAlert;
 use phpDocumentor\Reflection\Types\AbstractList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,25 +36,51 @@ class projectview extends AbstractController
         $entityManager = $doctrine->getManager();
 //        $id=$this->getRequest()->getUriForPath('project');
 //        dump($runScan->runScan($id,$doctrine));
+        $data=$doctrine->getRepository(ScanAlert::class)->findAll();
+//        foreach ($data as $zm) {
+//            $dataEntity = new PageAlert();
+//            dump($zm->getName(),$zm->getParam(),$zm->getRisk());
+//        }
+
         $scan = new Project();
         $form = $this->createFormBuilder($scan)
             ->add('doTest', SubmitType::class)
             ->getForm();
+        $viewdata= new PageAlert();
+//        $form1 = $this->createFormBuilder($viewdata)
+//            ->add(;)
+//            ->getForm();
+//        $form = $this->createForm(new PageAlert(), $data);
+//        $form->get('alert')->setData($data);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid())  {
-
             $runScan->runScan($id,$doctrine);
-
-
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($id);
+            $entityManager->flush();
+//            return $this->redirectToRoute('project', ['id' => $id->getId()]);
+            return $this->redirect($this->generateUrl('project', array('id' => $id->getId(),)));
+            $request=null;
         }
+
+//        $data=$doctrine->getRepository(PageAlert::class)->findAll();
+//        dump($data);
+//        foreach ($data as $zm) {
+//            $dataEntity = new PageAlert();
+//
+//            $dataEntity->getRisk();
+//            dump($zm->getRisk());
+//        }
+//
+//        $this->em->flush();
 
 //        scan($request,$runScan,$doctrine,$id);
 //        $runScan->runScan($id,$doctrine);
 
-        return $this->render('front/project.html.twig', array(
-            'form' => $form->createView()));
+        return $this->render('front/project.html.twig',[
+            'form' => $form->createView(),
+            'alert'=>$data]);
 
     }
 

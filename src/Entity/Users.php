@@ -2,24 +2,44 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UsersRepository::class)]
+/**
+ * Users
+ *
+ * @ORM\Table(name="users")
+ * @ORM\Entity
+ */
 class Users
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'text')]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="text", length=0, nullable=false)
+     */
     private $email;
 
-    #[ORM\Column(type: 'text')]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="text", length=0, nullable=false)
+     */
     private $password;
 
-    #[ORM\Column(type: 'text')]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="text", length=0, nullable=false)
+     */
     private $role;
 
     public function getId(): ?int
@@ -62,4 +82,6 @@ class Users
 
         return $this;
     }
+
+
 }
