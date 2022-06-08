@@ -2,28 +2,52 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProjectRepository::class)]
+/**
+ * Project
+ *
+ * @ORM\Table(name="project")
+ * @ORM\Entity
+ */
 class Project
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
     private $name;
 
-    #[ORM\Column(type: 'string', length: 1000)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=1000, nullable=false)
+     */
     private $url;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="users", type="string", length=255, nullable=false)
+     */
     private $users;
 
-    #[ORM\Column(type: 'text')]
-    private $url_image;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url_image", type="text", length=0, nullable=false)
+     */
+    private $urlImage;
 
     public function getId(): ?int
     {
@@ -68,13 +92,15 @@ class Project
 
     public function getUrlImage(): ?string
     {
-        return $this->url_image;
+        return $this->urlImage;
     }
 
-    public function setUrlImage(string $url_image): self
+    public function setUrlImage(string $urlImage): self
     {
-        $this->url_image = $url_image;
+        $this->urlImage = $urlImage;
 
         return $this;
     }
+
+
 }

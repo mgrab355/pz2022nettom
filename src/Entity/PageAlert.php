@@ -2,34 +2,66 @@
 
 namespace App\Entity;
 
-use App\Repository\PageAlertRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PageAlertRepository::class)]
+/**
+ * PageAlert
+ *
+ * @ORM\Table(name="page_alert")
+ * @ORM\Entity
+ */
 class PageAlert
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="evidence", type="string", length=255, nullable=false)
+     */
     private $evidence;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $param;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alert_id", type="string", length=255, nullable=false)
+     */
+    private $alertId;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="risk", type="string", length=255, nullable=false)
+     */
     private $risk;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uri", type="string", length=255, nullable=false)
+     */
     private $uri;
 
-    #[ORM\Column(type: 'string')]
-    private $alert_id;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="param", type="string", length=255, nullable=false)
+     */
+    private $param;
 
     public function getId(): ?int
     {
@@ -60,14 +92,14 @@ class PageAlert
         return $this;
     }
 
-    public function getParam(): ?string
+    public function getAlertId(): ?string
     {
-        return $this->param;
+        return $this->alertId;
     }
 
-    public function setParam(string $param): self
+    public function setAlertId(string $alertId): self
     {
-        $this->param = $param;
+        $this->alertId = $alertId;
 
         return $this;
     }
@@ -96,16 +128,17 @@ class PageAlert
         return $this;
     }
 
-    public function getAlertId(): ?string
+    public function getParam(): ?string
     {
-        return $this->alert_id;
+        return $this->param;
     }
 
-    public function setAlertId(string $alert_id): self
+    public function setParam(string $param): self
     {
-        $this->alert_id = $alert_id;
+        $this->param = $param;
 
         return $this;
     }
+
 
 }
