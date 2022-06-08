@@ -16,11 +16,12 @@ class AdvancedScan
         $ch = curl_init();
         $key = $api->getApiKey();
         curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/JSON/alert/view/alerts/?apikey={$key}&baseurl={$baseUrl}&start=&count=&riskId=");
+//        http://localhost:8080/JSON/alert/view/alerts/?apikey={$key}&baseurl={$baseUrl}&start=&count=&riskId=
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $output = curl_exec($ch);
         $err = curl_error($ch);
-        dump($output);
-        dump($err);
+//        dump($output);
+//        dump($err);
         curl_close($ch);
 
         return $output; //

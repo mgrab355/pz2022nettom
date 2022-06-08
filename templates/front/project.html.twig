@@ -4,10 +4,10 @@
     {{ form_start(form) }}
     <div class="row1 justify-content-center align-items-center">
         <div class="card w-75 h-75 ">
-            <div class="card-header">https://www.test.pl
+            <div class="card-header">{{ project.url }}
             </div>
             <div class="card-body ">
-                <h5 class="card-title">Name of project</h5>
+                <h5 class="card-title">{{ project.name }}</h5>
                 <div class="btn-group-lg align-content-around">
                     {#                <button class="btn btn-primary btn-lg">Do Test</button>#}
                     {{ form_widget(form.doTest,{'attr': {'class': 'btn btn-primary btn-lg','type':'submit'}}) }}

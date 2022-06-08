@@ -6,6 +6,7 @@ use App\Entity\PageAlert;
 use App\Entity\Project;
 
 use App\Entity\ScanAlert;
+use App\Entity\ScansId;
 use phpDocumentor\Reflection\Types\AbstractList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,16 +32,19 @@ class projectview extends AbstractController
 
     public function index(Request $request,runScan $runScan,ManagerRegistry $doctrine,$id): Response
     {
-
+        $scanid=0;
 //     dump($question_id = $request->query->get('$id'));
         $entityManager = $doctrine->getManager();
 //        $id=$this->getRequest()->getUriForPath('project');
 //        dump($runScan->runScan($id,$doctrine));
-        $data=$doctrine->getRepository(ScanAlert::class)->findAll();
+        $ProjectData=$doctrine->getRepository(Project::class)->findOneBy(['id'=> $id]);
+        $scanid = $doctrine->getRepository(ScansId::class)->findOneBy(['projectId'=>$id],['id'=>'DESC']);
+        $scanid=$scanid->getId();
 //        foreach ($data as $zm) {
 //            $dataEntity = new PageAlert();
 //            dump($zm->getName(),$zm->getParam(),$zm->getRisk());
 //        }
+
 
         $scan = new Project();
         $form = $this->createFormBuilder($scan)
@@ -56,13 +60,22 @@ class projectview extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())  {
             $runScan->runScan($id,$doctrine);
+            $scans=new ScansId();
+            $scans->setProjectId($id);
             $entityManager = $doctrine->getManager();
-            $entityManager->persist($id);
+            $entityManager->persist($scans);
             $entityManager->flush();
-//            return $this->redirectToRoute('project', ['id' => $id->getId()]);
-            return $this->redirect($this->generateUrl('project', array('id' => $id->getId(),)));
+            $scanid = $doctrine->getRepository(ScansId::class)->findOneBy(['projectId'=>$id],['id'=>'DESC']);
+            $scanid=$scanid->getId();
+//            $entityManager = $doctrine->getManager();
+//            $entityManager->persist($id);
+//            $entityManager->flush();
+////            return $this->redirectToRoute('project', ['id' => $id->getId()]);
+//            return $this->redirect($this->generateUrl('project', array('id' => $id->getId(),)));
             $request=null;
         }
+//        $ScanAlertData=$doctrine->getRepository(ScanAlert::class)->findAll();
+        $ScanAlertData=$doctrine->getRepository(ScanAlert::class)->findBy(['project'=>$scanid],['scans'=>'DESC']);
 
 //        $data=$doctrine->getRepository(PageAlert::class)->findAll();
 //        dump($data);
@@ -80,7 +93,10 @@ class projectview extends AbstractController
 
         return $this->render('front/project.html.twig',[
             'form' => $form->createView(),
-            'alert'=>$data]);
+            'alert'=>$ScanAlertData,
+            'project'=>$ProjectData
+        ]);//Szczególowe scany
+
 
     }
 
