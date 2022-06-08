@@ -25,6 +25,12 @@ use App\Services\runScan;
 
 class projectview extends AbstractController
 {
+//    private function compare(Customer $a, Customer $b)TO DOOO
+//    {
+//        return $a->getTitle() === $b->getTitle() &&
+//            $a->getName() === $b->getName() &&
+//            $a->getLastName() === $b->getLastName();
+//    }
     /**
      * @Route ("/project/id/{id}",name="project" )
      *
