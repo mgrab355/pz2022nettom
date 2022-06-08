@@ -7,6 +7,8 @@ use App\Entity\Project;
 
 use App\Entity\ScanAlert;
 use App\Entity\ScansId;
+use App\Services\AdvancedScan;
+use App\Services\InsertingScan;
 use phpDocumentor\Reflection\Types\AbstractList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +32,7 @@ class projectview extends AbstractController
      *
      */
 
-    public function index(Request $request,runScan $runScan,ManagerRegistry $doctrine,$id): Response
+    public function index(Request $request,runScan $runScan,ManagerRegistry $doctrine,$id,InsertingScan $insertingscan,AdvancedScan $getAdvancedScan): Response
     {
         $scanid=0;
 //     dump($question_id = $request->query->get('$id'));
@@ -39,7 +41,9 @@ class projectview extends AbstractController
 //        dump($runScan->runScan($id,$doctrine));
         $ProjectData=$doctrine->getRepository(Project::class)->findOneBy(['id'=> $id]);
         $scanid = $doctrine->getRepository(ScansId::class)->findOneBy(['projectId'=>$id],['id'=>'DESC']);
-        $scanid=$scanid->getId();
+
+
+
 //        foreach ($data as $zm) {
 //            $dataEntity = new PageAlert();
 //            dump($zm->getName(),$zm->getParam(),$zm->getRisk());
@@ -66,7 +70,7 @@ class projectview extends AbstractController
             $entityManager->persist($scans);
             $entityManager->flush();
             $scanid = $doctrine->getRepository(ScansId::class)->findOneBy(['projectId'=>$id],['id'=>'DESC']);
-            $scanid=$scanid->getId();
+            $insertingscan->InsertingScan($doctrine,$getAdvancedScan,$scanid,$id,$ProjectData->getUrl());
 //            $entityManager = $doctrine->getManager();
 //            $entityManager->persist($id);
 //            $entityManager->flush();
@@ -75,21 +79,9 @@ class projectview extends AbstractController
             $request=null;
         }
 //        $ScanAlertData=$doctrine->getRepository(ScanAlert::class)->findAll();
-        $ScanAlertData=$doctrine->getRepository(ScanAlert::class)->findBy(['project'=>$scanid],['scans'=>'DESC']);
 
-//        $data=$doctrine->getRepository(PageAlert::class)->findAll();
-//        dump($data);
-//        foreach ($data as $zm) {
-//            $dataEntity = new PageAlert();
-//
-//            $dataEntity->getRisk();
-//            dump($zm->getRisk());
-//        }
-//
-//        $this->em->flush();
+        $ScanAlertData=$doctrine->getRepository(ScanAlert::class)->findBy(['scans'=>$scanid],['scans'=>'DESC']);
 
-//        scan($request,$runScan,$doctrine,$id);
-//        $runScan->runScan($id,$doctrine);
 
         return $this->render('front/project.html.twig',[
             'form' => $form->createView(),

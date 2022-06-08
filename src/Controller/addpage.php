@@ -61,10 +61,7 @@ class addpage extends AbstractController
     {
         // wczesniejszy import z services/getscan oraz wywowalnie funkcji.
         //23.05  wyswietlenie szczegolowego scanu
-//        $zm= (new ScansId { scans = $id, project = "5"});
-//        $zm["id"]=1;
-//        $zm1= new Project();
-//        $zm1["id"]=5;
+
         $ProjectScans=$doctrine->getRepository(ScansId::class)->findOneBy(['id'=> $scansid]);
         $ProjectData=$doctrine->getRepository(Project::class)->findOneBy(['id'=> $projectID]);
         $scans = $getAdvancedScan->getAdvScans('http://127.0.0.1:7000',$doctrine);
@@ -97,8 +94,8 @@ class addpage extends AbstractController
             }
         }
 //        return true; //  nic sie nie dzieje, jest wyswietlana tylko jeden raport niezaleznie od tego co zostanie podane, nie dodaje do bazy
-        dump($doctrine->getRepository(ScanAlert::class)->findAll());
-        return $this->render('front/login.html.twig');
+
+        return $this->redirect($this->generateUrl('project', array('id' => $projectID,)));
     }
 
     /**
